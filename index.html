@@ -192,6 +192,11 @@
           <option value="1">Seguridad</option>
           <option value="2">Privacidad</option>
         </select>
+
+        <!-- Sección de Productos Globales -->
+        <h3>Productos Globales</h3>
+        <div id="globalProductsContainer"></div>
+        <button type="button" class="btn" id="addGlobalProductBtn">Agregar Producto Global</button>
         
         <label for="andamiosGlobal">Andamios:</label>
         <input type="number" id="andamiosGlobal" name="andamios_global">
@@ -221,10 +226,7 @@
         <label for="silletaGlobal">Silleta:</label>
         <input type="checkbox" id="silletaGlobal" name="silleta_global">
         
-        <!-- Sección de Productos Globales -->
-        <h3>Productos Globales</h3>
-        <div id="globalProductsContainer"></div>
-        <button type="button" class="btn" id="addGlobalProductBtn">Agregar Producto Global</button>
+        
       </div>
       
       <!-- SECCIÓN 4: Sectores -->
@@ -408,10 +410,9 @@
         selectVidrio.name = `sector_${currentSectorIndex}_tipo_vidrio`;
         selectVidrio.classList.add("local-global-attr");
         const tiposVidrioSim = [
-          { id: 1, descripcion: "Control Solar" },
-          { id: 2, descripcion: "Seguridad" },
-          { id: 3, descripcion: "Privacidad" },
-          { id: 4, descripcion: "Gráfica" }
+          { id: 1, descripcion: "DVH" },
+          { id: 2, descripcion: "Crudo" },
+          { id: 3, descripcion: "Laminado" }
         ];
         tiposVidrioSim.forEach(tv => {
           const option = document.createElement("option");
@@ -450,9 +451,8 @@
         selectTipoProd.name = `sector_${currentSectorIndex}_tipo_producto`;
         selectTipoProd.classList.add("local-global-attr");
         const tiposProdSim = [
-          { id: 1, descripcion: "Tipo de producto 1" },
-          { id: 2, descripcion: "Tipo de producto 2" },
-          { id: 3, descripcion: "Tipo de producto 3" }
+          { id: 1, descripcion: "Seguridad" },
+          { id: 2, descripcion: "Privacidad" }
         ];
         tiposProdSim.forEach(tp => {  
           const option = document.createElement("option");
@@ -461,6 +461,19 @@
           selectTipoProd.appendChild(option);
         });
         sectorDiv.appendChild(selectTipoProd);
+
+        // Contenedor de Productos (local)
+        const productosContainer = document.createElement("div");
+        productosContainer.classList.add("productos-container");
+        sectorDiv.appendChild(productosContainer);
+        const addProductoBtn = document.createElement("button");
+        addProductoBtn.type = "button";
+        addProductoBtn.textContent = "Agregar Producto al Sector";
+        addProductoBtn.classList.add("btn", "add-producto-btn");
+        addProductoBtn.addEventListener("click", function() {
+          productosContainer.appendChild(createSectorProductoRow(currentSectorIndex));
+        });
+        sectorDiv.appendChild(addProductoBtn);
         
         // Andamios
         const labelAndamios = document.createElement("label");
@@ -567,18 +580,7 @@
         });
         sectorDiv.appendChild(addMedidaBtn);
         
-        // Contenedor de Productos (local)
-        const productosContainer = document.createElement("div");
-        productosContainer.classList.add("productos-container");
-        sectorDiv.appendChild(productosContainer);
-        const addProductoBtn = document.createElement("button");
-        addProductoBtn.type = "button";
-        addProductoBtn.textContent = "Agregar Producto al Sector";
-        addProductoBtn.classList.add("btn", "add-producto-btn");
-        addProductoBtn.addEventListener("click", function() {
-          productosContainer.appendChild(createSectorProductoRow(currentSectorIndex));
-        });
-        sectorDiv.appendChild(addProductoBtn);
+        
         
         updateResumenTableSector();
         updateSectorAttributesVisibility();
